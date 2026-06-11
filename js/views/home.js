@@ -8,7 +8,7 @@
    ========================================================================== */
 
 import { getDecks, getCardsByDeck } from '../storage.js';
-import { endOfToday } from '../dates.js';
+import { countDue } from '../queue.js';
 import { navigate } from '../router.js';
 import { openDeckForm } from './deck-form.js';
 
@@ -88,8 +88,8 @@ function renderEmpty() {
 function renderDeckCard(deck) {
   const cards = getCardsByDeck(deck.id);
   const total = cards.length;
-  const today = endOfToday();
-  const due = cards.filter((c) => c.srs.dueAt <= today).length;
+  // Fuente de verdad: el mismo conteo que la cola de estudio (countDue).
+  const due = countDue(cards, { newLimit: 10 });
 
   const item = el('li', 'home__item');
 

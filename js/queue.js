@@ -20,6 +20,12 @@ export function isNewCard(card) {
   return card.srs.repetitions === 0;
 }
 
+/** Repaso vencido: ya visto (repetitions > 0) y con dueAt dentro de hoy o antes.
+ *  Predicado compartido por buildQueue y countDue para que no puedan divergir. */
+function isDueReview(card, todayEnd) {
+  return card.srs.repetitions > 0 && card.srs.dueAt <= todayEnd;
+}
+
 /**
  * Construye la cola de estudio.
  * @param {object[]} cards - tarjetas del mazo.
@@ -30,7 +36,7 @@ export function buildQueue(cards, { now = Date.now(), newLimit = 10 } = {}) {
   const todayEnd = endOfToday(now);
 
   const dueReviews = cards
-    .filter((c) => c.srs.repetitions > 0 && c.srs.dueAt <= todayEnd)
+    .filter((c) => isDueReview(c, todayEnd))
     .sort((a, b) => a.srs.dueAt - b.srs.dueAt || a.srs.easeFactor - b.srs.easeFactor);
 
   // Rellenar con nuevas hasta completar newLimit en total.
@@ -41,4 +47,22 @@ export function buildQueue(cards, { now = Date.now(), newLimit = 10 } = {}) {
     .slice(0, slots);
 
   return [...dueReviews, ...newCards];
+}
+
+/**
+ * Cuenta cuántas tarjetas entrarían en la cola, sin construirla. Misma lógica
+ * que buildQueue (repasos vencidos + nuevas hasta newLimit). Fuente de verdad
+ * del badge de pendientes en home.
+ * @param {object[]} cards
+ * @param {{now?:number, newLimit?:number}} [opts]
+ * @returns {number}
+ */
+export function countDue(cards, { now = Date.now(), newLimit = 10 } = {}) {
+  const todayEnd = endOfToday(now);
+
+  const dueReviews = cards.filter((c) => isDueReview(c, todayEnd)).length;
+  const slots = Math.max(0, newLimit - dueReviews);
+  const newCards = cards.filter(isNewCard).length;
+
+  return dueReviews + Math.min(slots, newCards);
 }

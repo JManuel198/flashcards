@@ -22,20 +22,8 @@
 
   <body>
     <div class="app">
-      <header class="app__header">
-        <!-- Navegación principal — se poblará desde JS en pasos posteriores -->
-        <nav class="nav" aria-label="Navegación principal"></nav>
-      </header>
-
-      <!-- Área de vistas. Cada vista es una cáscara semántica vacía;
-           el router (Paso 2) mostrará una y ocultará el resto. -->
-      <main class="app__content" id="content">
-        <section class="view" id="view-home" data-view="home" aria-label="Inicio" hidden></section>
-        <section class="view" id="view-deck" data-view="deck" aria-label="Mazo" hidden></section>
-        <section class="view" id="view-study" data-view="study" aria-label="Estudio" hidden></section>
-        <section class="view" id="view-summary" data-view="summary" aria-label="Resumen de la sesión" hidden></section>
-        <section class="view" id="view-progress" data-view="progress" aria-label="Progreso" hidden></section>
-      </main>
+      <!-- El router renderiza la vista activa aquí -->
+      <main class="app__content" id="content"></main>
     </div>
 
     <script type="module" src="js/app.js"></script>

@@ -14,6 +14,8 @@
    clave que romper el arranque entero).
    ========================================================================== */
 
+import { createSrsState } from './srs.js';
+
 const SCHEMA_VERSION = 1;
 
 const KEYS = {
@@ -93,6 +95,17 @@ export function migrate(data) {
   if (!Array.isArray(data.decks)) data.decks = [];
   if (!Array.isArray(data.cards)) data.cards = [];
   if (!Array.isArray(data.sessions)) data.sessions = [];
+
+  // Normaliza tarjetas: descarta las inválidas (sin id o sin deckId) y
+  // rellena slices que un backup editado a mano pudo dejar fuera. Así un
+  // archivo truncado nunca deja la app con tarjetas a medias.
+  data.cards = data.cards
+    .filter((c) => c && c.id && c.deckId)
+    .map((c) => ({
+      ...c,
+      srs: c.srs ?? createSrsState(),
+      stats: c.stats ?? { totalReviews: 0, sumConfidence: 0, recent: [] },
+    }));
 
   // Migraciones futuras, una por versión:
   // while (data.schemaVersion < SCHEMA_VERSION) {

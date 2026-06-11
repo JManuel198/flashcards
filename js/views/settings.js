@@ -4,9 +4,31 @@
    ========================================================================== */
 
 import { exportAll, importAll } from '../storage.js';
+import { createDeck, createCard } from '../models.js';
 import { navigate } from '../router.js';
+import { showToast } from '../toast.js';
 
 const STYLE_HREF = 'css/views/settings.css';
+
+/** Construye el dataset de demostración (2 mazos, 5 tarjetas cada uno, 0 sesiones).
+ *  Usa las factories para ids/timestamps válidos; listo para importAll(). */
+function buildDemoDataset() {
+  const n5 = createDeck('Japonés N5', '#d95d42');
+  const fe = createDeck('Frontend', '#5fa882');
+  const cards = [
+    createCard(n5.id, '食べる', 'taberu — comer (verbo ichidan)'),
+    createCard(n5.id, '水', 'mizu — agua'),
+    createCard(n5.id, '学校', 'gakkō — escuela'),
+    createCard(n5.id, '犬', 'inu — perro'),
+    createCard(n5.id, '山', 'yama — montaña'),
+    createCard(fe.id, 'closure', 'Función que recuerda el scope léxico donde fue creada.'),
+    createCard(fe.id, 'event loop', 'Bucle que procesa la cola de tareas cuando el call stack está vacío.'),
+    createCard(fe.id, 'specificity', 'Peso de un selector CSS que decide qué regla gana ante un conflicto.'),
+    createCard(fe.id, 'hoisting', 'Elevación de declaraciones (var/función) al inicio de su scope.'),
+    createCard(fe.id, 'box model', 'Cada elemento es content + padding + border + margin.'),
+  ];
+  return { schemaVersion: 1, decks: [n5, fe], cards, sessions: [] };
+}
 
 function ensureStyle(href) {
   if (document.querySelector(`link[data-view-style="${href}"]`)) return;
@@ -91,6 +113,25 @@ export function renderSettings(container) {
   });
   exportGroup.append(exportBtn);
 
+  // --- Datos de ejemplo ---------------------------------------------------
+  const demoGroup = el('div', 'settings__group');
+  demoGroup.append(el('h2', 'settings__group-title', 'Datos de ejemplo'));
+  demoGroup.append(
+    el('p', 'settings__hint', 'Carga 2 mazos de muestra (japonés y frontend) para explorar la app.'),
+  );
+  const demoBtn = el('button', 'settings__btn', 'Cargar datos de ejemplo');
+  demoBtn.type = 'button';
+  demoBtn.addEventListener('click', () => {
+    const ok = window.confirm(
+      'Esto reemplazará tus datos actuales por el conjunto de ejemplo. Esta acción no se puede deshacer. ¿Continuar?',
+    );
+    if (!ok) return;
+    importAll(buildDemoDataset());
+    navigate('#/');
+    showToast('Datos de ejemplo cargados');
+  });
+  demoGroup.append(demoBtn);
+
   // --- Importar -----------------------------------------------------------
   const importGroup = el('div', 'settings__group');
   importGroup.append(el('h2', 'settings__group-title', 'Restaurar'));
@@ -127,6 +168,14 @@ export function renderSettings(container) {
         fileInput.value = '';
         return;
       }
+      // Confirmación con el conteo del BACKUP (lo que se va a cargar).
+      const ok = window.confirm(
+        `Vas a sustituir ${data.decks.length} mazos y ${data.cards.length} tarjetas con los datos del backup. Esta acción no se puede deshacer. ¿Continuar?`,
+      );
+      if (!ok) {
+        fileInput.value = '';
+        return;
+      }
       importAll(data);
       fileInput.value = '';
       showMessage('Datos importados correctamente.', 'success');
@@ -142,6 +191,6 @@ export function renderSettings(container) {
 
   importGroup.append(importBtn, fileInput);
 
-  section.append(back, title, message, exportGroup, importGroup);
+  section.append(back, title, message, exportGroup, demoGroup, importGroup);
   container.append(section);
 }

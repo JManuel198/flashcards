@@ -24,5 +24,3 @@ initRouter({
 
 // Ruta inicial: si no hay hash, normaliza a #/ (home).
 if (!window.location.hash) navigate('#/');
-
-console.log('app iniciada');
