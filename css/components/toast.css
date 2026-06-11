@@ -1,0 +1,46 @@
+/* ==========================================================================
+   components/toast.css — Notificaciones efímeras. Solo tokens semánticos.
+   ========================================================================== */
+
+.toast-region {
+  position: fixed;
+  left: 50%;
+  bottom: var(--space-5);
+  transform: translateX(-50%);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  width: max-content;
+  max-width: calc(100vw - var(--space-6));
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-overlay);
+  border: 1px solid currentColor;
+  box-shadow: var(--shadow-overlay);
+  text-align: center;
+
+  opacity: 0;
+  transform: translateY(var(--space-3));
+  transition:
+    opacity var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* El color del texto/borde marca el tipo (tokens de confianza) */
+.toast--success { color: var(--confidence-5); } /* matcha */
+.toast--error   { color: var(--confidence-1); } /* aka */
+.toast--warning { color: var(--confidence-2); } /* kohaku */

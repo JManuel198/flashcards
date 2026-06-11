@@ -1,0 +1,88 @@
+/* ==========================================================================
+   components/card.css — Tarjeta de estudio con volteo 3D
+   JS solo hace: cardEl.classList.toggle('is-flipped')
+   HTML esperado:
+
+   <div class="card" tabindex="0" role="button" aria-pressed="false">
+     <div class="card__inner">
+       <div class="card__face card__face--front">
+         <p class="card__content" lang="ja">食べる</p>
+       </div>
+       <div class="card__face card__face--back">
+         <p class="card__content">taberu — comer</p>
+       </div>
+     </div>
+   </div>
+   ========================================================================== */
+
+.card {
+  /* perspective vive en el padre del elemento que rota */
+  perspective: 1200px;
+  width: min(100%, 560px);
+  aspect-ratio: 3 / 2;
+  margin-inline: auto;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--radius-lg);
+}
+
+.card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform var(--flip-duration) var(--ease-flip);
+}
+
+/* Estado: JS añade/quita .is-flipped en .card */
+.card.is-flipped .card__inner {
+  transform: rotateY(180deg);
+}
+
+.card__face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--space-5);
+  overflow: hidden;
+
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; /* Safari */
+}
+
+/* El reverso vive pre-rotado 180°; al girar el inner, queda de frente */
+.card__face--back {
+  transform: rotateY(180deg);
+  /* señal sutil de "estás viendo la respuesta" */
+  border-top: 2px solid var(--accent);
+}
+
+.card__content {
+  font-family: var(--font-jp);
+  font-size: var(--text-card);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  color: var(--text-primary);
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+/* Accesibilidad: sin animación 3D si el usuario lo pide.
+   El cambio de cara sigue funcionando, solo que instantáneo. */
+@media (prefers-reduced-motion: reduce) {
+  .card__inner {
+    transition: none;
+  }
+}

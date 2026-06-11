@@ -1,0 +1,272 @@
+/* ==========================================================================
+   views/deck.css — Vista de detalle de mazo + modal de mazo (deck-form).
+   Solo tokens semánticos. El scrim del overlay se deriva de --bg con
+   color-mix (ratio, no color hardcodeado).
+   ========================================================================== */
+
+/* --- Vista deck ---------------------------------------------------------- */
+.deck {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.deck__back {
+  align-self: flex-start;
+  padding: var(--space-1) 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.deck__back:hover {
+  color: var(--text-primary);
+}
+
+.deck__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  /* El color del mazo como acento: barra a la izquierda del título. */
+  padding-left: var(--space-4);
+  border-left: 4px solid var(--deck-color, var(--accent));
+}
+
+.deck__title {
+  font-size: var(--text-xl);
+  color: var(--text-primary);
+}
+
+.deck__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* --- Botones (compartidos vista + modal) --------------------------------- */
+.deck__btn,
+.deck-form__btn {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  background-color: var(--surface-raised);
+  color: var(--text-primary);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.deck__btn:hover,
+.deck-form__btn:hover {
+  background-color: var(--surface-hover);
+}
+
+.deck__btn:focus-visible,
+.deck-form__btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.deck__btn--primary,
+.deck-form__btn--primary {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--text-on-accent);
+}
+
+.deck__btn--primary:hover,
+.deck-form__btn--primary:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.deck__btn--danger {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.deck__btn--danger:hover {
+  background-color: var(--accent-subtle);
+}
+
+.deck-form__btn--ghost {
+  background-color: transparent;
+  border-color: var(--border-strong);
+  color: var(--text-secondary);
+}
+
+/* --- Lista de tarjetas --------------------------------------------------- */
+.deck__cards {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.deck-card-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.deck-card-row__front {
+  font-family: var(--font-jp);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.deck-card-row__back {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.deck-card-row__toggle {
+  align-self: flex-start;
+  font-size: var(--text-sm);
+  color: var(--accent);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.deck-card-row__toggle:hover {
+  color: var(--accent-hover);
+}
+
+/* --- Estado vacío -------------------------------------------------------- */
+.deck__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+  padding: var(--space-7) var(--space-4);
+}
+
+.deck__empty-title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+}
+
+.deck__empty-hint {
+  color: var(--text-muted);
+  max-width: 32ch;
+}
+
+/* ==========================================================================
+   MODAL (deck-form)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  /* scrim: la página oscurecida, derivado de un token (sin color crudo) */
+  background-color: color-mix(in srgb, var(--bg) 72%, transparent);
+}
+
+.modal {
+  width: min(100%, 420px);
+  /* No cortarse en pantallas bajas: limitar alto y permitir scroll interno. */
+  max-height: calc(100dvh - var(--space-7));
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  background-color: var(--surface-overlay);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-overlay);
+}
+
+.modal__title {
+  font-size: var(--text-lg);
+  color: var(--text-primary);
+}
+
+.deck-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.deck-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.deck-form__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+}
+
+.deck-form__input {
+  width: 100%;
+}
+
+.deck-form__error {
+  font-size: var(--text-sm);
+  color: var(--danger);
+}
+
+/* Swatches de color */
+.deck-form__swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.deck-form__swatch {
+  width: var(--space-6);
+  height: var(--space-6);
+  border-radius: var(--radius-md);
+  background-color: var(--swatch);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.deck-form__swatch:hover {
+  transform: scale(1.08);
+}
+
+.deck-form__swatch.is-selected {
+  border-color: var(--text-primary);
+}
+
+.deck-form__swatch:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.deck-form__color {
+  width: var(--space-6);
+  height: var(--space-6);
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-raised);
+  cursor: pointer;
+}
+
+.deck-form__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}

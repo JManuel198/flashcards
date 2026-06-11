@@ -1,0 +1,117 @@
+/* ==========================================================================
+   views/study.css — Modo estudio. La tarjeta es la protagonista.
+   El volteo 3D lo aporta card.css; aquí solo el encuadre y los controles.
+   Solo tokens semánticos.
+   ========================================================================== */
+
+.study {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-height: 70vh;
+}
+
+/* Contador discreto, arriba */
+.study__counter {
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* La tarjeta, centrada y grande, ocupa el espacio disponible */
+.study__card-wrap {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding-block: var(--space-4);
+}
+
+/* --- Botones de confianza ------------------------------------------------ */
+.study__rates {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.study__rate {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-width: var(--space-7);
+  /* WCAG 2.5.5: objetivo táctil ≥ 44px de alto en móvil */
+  min-height: 2.75rem;
+  padding: var(--space-3) var(--space-2);
+  background-color: transparent;
+  border: 1px solid var(--rate-color);
+  border-radius: var(--radius-md);
+  color: var(--rate-color);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.study__rate:hover {
+  background-color: var(--rate-color);
+  color: var(--text-on-accent);
+}
+
+.study__rate:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.study__rate-num {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  line-height: 1;
+}
+
+.study__rate-label {
+  font-size: var(--text-xs);
+}
+
+/* Cada nivel toma su color de la escala de confianza de tokens.css */
+.study__rate--1 { --rate-color: var(--confidence-1); }
+.study__rate--2 { --rate-color: var(--confidence-2); }
+.study__rate--3 { --rate-color: var(--confidence-3); }
+.study__rate--4 { --rate-color: var(--confidence-4); }
+.study__rate--5 { --rate-color: var(--confidence-5); }
+
+/* --- Pantalla "Todo al día" / mensajes ----------------------------------- */
+.study__done {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  text-align: center;
+  padding: var(--space-8) var(--space-4);
+}
+
+.study__done-title {
+  font-size: var(--text-xl);
+  color: var(--text-primary);
+}
+
+.study__done-hint {
+  color: var(--text-muted);
+  max-width: 40ch;
+}
+
+.study__btn {
+  padding: var(--space-2) var(--space-5);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-md);
+  background-color: var(--accent);
+  color: var(--text-on-accent);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.study__btn:hover {
+  background-color: var(--accent-hover);
+}

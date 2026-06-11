@@ -1,0 +1,130 @@
+/* ==========================================================================
+   views/home.css — Vista de lista de mazos.
+   Mobile-first: una columna; en pantallas anchas, dos.
+   Solo tokens semánticos.
+   ========================================================================== */
+
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* --- Cabecera ------------------------------------------------------------ */
+.home__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.home__title {
+  font-size: var(--text-xl);
+  color: var(--text-primary);
+}
+
+.home__new-deck {
+  flex-shrink: 0;
+  padding: var(--space-2) var(--space-4);
+  background-color: var(--accent);
+  color: var(--text-on-accent);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-md);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.home__new-deck:hover {
+  background-color: var(--accent-hover);
+}
+
+/* --- Lista de mazos ------------------------------------------------------ */
+.home__list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 32rem) {
+  .home__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- Tarjeta de mazo ----------------------------------------------------- */
+.deck-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  text-align: left;
+  padding: var(--space-5);
+
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  /* El acento del mazo: borde izquierdo con su color propio. */
+  border-left: 3px solid var(--deck-color, var(--accent));
+  border-radius: var(--radius-md);
+
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.deck-card:hover {
+  background-color: var(--surface-hover);
+}
+
+.deck-card:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.deck-card__name {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.deck-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.deck-card__count {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.deck-card__due {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* Hay trabajo pendiente hoy: el dato salta con el color de acento. */
+.deck-card__due--active {
+  color: var(--accent);
+  font-weight: var(--weight-medium);
+}
+
+/* --- Estado vacío -------------------------------------------------------- */
+.home__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+  padding: var(--space-8) var(--space-4);
+}
+
+.home__empty-title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+}
+
+.home__empty-hint {
+  font-size: var(--text-base);
+  color: var(--text-muted);
+  max-width: 32ch;
+}

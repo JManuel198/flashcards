@@ -1,0 +1,51 @@
+/* ==========================================================================
+   components/card-form.css — Campos del modal de tarjeta.
+   La cáscara del modal (.modal-overlay/.modal/.modal__title) y los botones
+   (.deck-form__btn) los aporta deck.css; aquí solo los campos propios.
+   Consistente con el modal de mazos. Solo tokens semánticos.
+   ========================================================================== */
+
+.card-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.card-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.card-form__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+}
+
+/* base.css ya da fondo/borde/padding/radio a textarea; aquí altura y ritmo. */
+.card-form__textarea {
+  width: 100%;
+  min-height: var(--space-8); /* 64px: cómodo para escribir */
+  resize: vertical;
+  line-height: var(--leading-base);
+  font-family: var(--font-ui);
+}
+
+/* El anverso suele ser kanji/código: fuente japonesa y algo más grande. */
+.card-form__textarea--front {
+  font-family: var(--font-jp);
+  font-size: var(--text-lg);
+}
+
+.card-form__error {
+  font-size: var(--text-sm);
+  color: var(--danger);
+}
+
+.card-form__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}

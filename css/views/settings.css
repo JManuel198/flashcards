@@ -1,0 +1,112 @@
+/* ==========================================================================
+   views/settings.css — Vista de ajustes (export/import).
+   Solo tokens semánticos. Mensajes con los tokens de confianza
+   (matcha = éxito, aka = error).
+   ========================================================================== */
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.settings__back {
+  align-self: flex-start;
+  padding: var(--space-1) 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.settings__back:hover {
+  color: var(--text-primary);
+}
+
+.settings__title {
+  font-size: var(--text-xl);
+  color: var(--text-primary);
+}
+
+/* --- Grupos de acción ---------------------------------------------------- */
+.settings__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.settings__group-title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.settings__hint {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  max-width: 48ch;
+}
+
+/* --- Botón primario (exportar) ------------------------------------------- */
+.settings__btn {
+  align-self: flex-start;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-md);
+  background-color: var(--accent);
+  color: var(--text-on-accent);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.settings__btn:hover {
+  background-color: var(--accent-hover);
+}
+
+.settings__btn:focus-visible,
+.settings__dropzone:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* --- Zona de importación (borde discontinuo) ----------------------------- */
+.settings__dropzone {
+  align-self: stretch;
+  padding: var(--space-6) var(--space-4);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  background-color: transparent;
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.settings__dropzone:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+/* --- Mensajes de estado -------------------------------------------------- */
+.settings__message {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-md);
+  border: 1px solid currentColor;
+}
+
+.settings__message--success {
+  color: var(--confidence-5); /* matcha */
+  background-color: var(--surface-raised);
+}
+
+.settings__message--error {
+  color: var(--confidence-1); /* aka */
+  background-color: var(--surface-raised);
+}

@@ -1,0 +1,159 @@
+/* ==========================================================================
+   views/summary.css — Resumen post-sesión. Solo tokens semánticos.
+   ========================================================================== */
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.summary__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.summary__title {
+  font-size: var(--text-xl);
+  color: var(--text-primary);
+}
+
+.summary__subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* --- Métricas ------------------------------------------------------------ */
+.summary__stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+
+@media (min-width: 32rem) {
+  .summary__stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.summary__stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.summary__stat-value {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+}
+
+.summary__stat-label {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+/* --- Distribución -------------------------------------------------------- */
+.summary__dist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.summary__dist-bar {
+  display: flex;
+  gap: 2px;
+  height: var(--space-6);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.summary__dist-seg {
+  display: grid;
+  place-items: center;
+  min-width: var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--text-on-accent);
+}
+
+/* Color por nivel (compartido por barra y leyenda) */
+.summary__dist-seg--1 { background-color: var(--confidence-1); }
+.summary__dist-seg--2 { background-color: var(--confidence-2); }
+.summary__dist-seg--3 { background-color: var(--confidence-3); }
+.summary__dist-seg--4 { background-color: var(--confidence-4); }
+.summary__dist-seg--5 { background-color: var(--confidence-5); }
+
+.summary__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.summary__legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.summary__legend-dot {
+  width: var(--space-3);
+  height: var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.summary__legend-label {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+/* --- Nota de tarjetas débiles -------------------------------------------- */
+.summary__weak {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--accent);
+  background-color: var(--accent-subtle);
+  border-radius: var(--radius-md);
+}
+
+/* --- Acciones ------------------------------------------------------------ */
+.summary__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.summary__btn {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  background-color: var(--surface-raised);
+  color: var(--text-primary);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.summary__btn:hover {
+  background-color: var(--surface-hover);
+}
+
+.summary__btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.summary__btn--primary {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--text-on-accent);
+}
+
+.summary__btn--primary:hover {
+  background-color: var(--accent-hover);
+}
