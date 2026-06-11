@@ -1,0 +1,151 @@
+/* ==========================================================================
+   base.css — Reset moderno + estilos globales de elementos.
+   REGLA: aquí solo se consumen tokens SEMÁNTICOS (capa 2 de tokens.css).
+   Nunca valores hardcodeados de color, tamaño o espaciado.
+   ========================================================================== */
+
+/* --- Reset moderno ------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-base);
+
+  background-color: var(--surface);
+  color: var(--text-primary);
+}
+
+/* Media: que nunca desborde su contenedor */
+img,
+picture,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+/* Formularios: heredar tipografía en vez de los defaults del navegador */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* Evitar overflow por palabras largas (útil con romaji/kanji) */
+p,
+h1,
+h2,
+h3,
+li {
+  overflow-wrap: break-word;
+}
+
+/* Quitar listas con rol semántico explícito */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+  padding: 0;
+}
+
+/* --- Tipografía base ----------------------------------------------------- */
+h1,
+h2,
+h3 {
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-xl);
+}
+
+h2 {
+  font-size: var(--text-lg);
+}
+
+h3 {
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+}
+
+p {
+  font-size: var(--text-base);
+  line-height: var(--leading-base);
+}
+
+/* --- Controles ----------------------------------------------------------- */
+button {
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: inherit;
+}
+
+input,
+textarea {
+  font-size: var(--text-base);
+  background-color: var(--surface-raised);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-color: var(--accent-hover);
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+/* Respetar la preferencia de reducir movimiento de forma global */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

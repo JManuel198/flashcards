@@ -1,0 +1,152 @@
+/* ==========================================================================
+   tokens.css — Sistema de diseño de la app de flashcards
+   Dark mode "sumi": tinta fría (fondos) + papel washi cálido (texto).
+   Las vistas y componentes SOLO consumen tokens semánticos (capa 2).
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------
+     CAPA 1 — PRIMITIVAS
+     No usar directamente en componentes. Solo alimentan la capa 2.
+     ------------------------------------------------------------------ */
+
+  /* Tinta sumi — escala fría con subtono azul, como tinta real */
+  --ink-1000: #0f1014;
+  --ink-950:  #14151b;
+  --ink-900:  #1a1c24;
+  --ink-800:  #232633;
+  --ink-700:  #2f3342;
+  --ink-600:  #3e4254;
+  --ink-500:  #565b6e;
+  --ink-400:  #767b8d;
+
+  /* Papel washi — escala cálida para texto (papel sobre tinta) */
+  --paper-100: #ece8de;
+  --paper-300: #c6c2b6;
+  --paper-500: #908d83;
+
+  /* Shu — rojo hanko, terroso, no vermellón saturado */
+  --shu-300: #ef9a82;
+  --shu-400: #e57a5e;
+  --shu-500: #d95d42;
+  --shu-600: #b84a34;
+  --shu-700: #93402e;
+
+  /* Escala de confianza — colores japoneses desaturados para dark */
+  --aka:     #c75646;  /* 1 — rojo */
+  --kohaku:  #c9904f;  /* 2 — ámbar */
+  --nezumi:  #8b8fa0;  /* 3 — gris ratón, neutro */
+  --wasabi:  #8aa66b;  /* 4 — verde wasabi */
+  --matcha:  #5fa882;  /* 5 — verde matcha */
+
+  /* ------------------------------------------------------------------
+     CAPA 2 — SEMÁNTICOS
+     Esto es lo que usan los componentes.
+     ------------------------------------------------------------------ */
+
+  /* Superficies — la elevación en dark mode es luz, no sombra:
+     cada nivel más alto es un paso más claro de la escala ink. */
+  --bg:              var(--ink-1000); /* fondo de página */
+  --surface:         var(--ink-950);  /* paneles, secciones */
+  --surface-raised:  var(--ink-900);  /* cards de mazo, tarjeta de estudio */
+  --surface-overlay: var(--ink-800);  /* modales, menús flotantes */
+  --surface-elevated: var(--ink-800); /* alias semántico del nivel elevado */
+  --surface-hover:   var(--ink-800);  /* hover sobre surface-raised */
+
+  /* Bordes */
+  --border-subtle: var(--ink-800);
+  --border-strong: var(--ink-600);
+
+  /* Texto */
+  --text-primary:   var(--paper-100);
+  --text-secondary: var(--paper-300);
+  --text-muted:     var(--paper-500);
+  --text-disabled:  var(--ink-400);   /* controles inactivos: gris frío, apagado */
+  --text-on-accent: var(--ink-1000);
+
+  /* Acento */
+  --accent:         var(--shu-500);
+  --accent-hover:   var(--shu-400);
+  --accent-pressed: var(--shu-600);
+  --accent-subtle:  rgba(217, 93, 66, 0.14); /* fondos suaves, badges */
+
+  /* Confianza 1–5 (botones de rating, gráficas de distribución) */
+  --confidence-1: var(--aka);
+  --confidence-2: var(--kohaku);
+  --confidence-3: var(--nezumi);
+  --confidence-4: var(--wasabi);
+  --confidence-5: var(--matcha);
+
+  /* Estados */
+  --danger:     var(--aka);
+  --success:    var(--matcha);
+  --focus-ring: var(--shu-400);
+
+  /* ------------------------------------------------------------------
+     TIPOGRAFÍA
+     --font-jp: contenido de tarjetas (cubre kanji/hiragana/katakana).
+     --font-ui: navegación, botones, etiquetas, datos.
+     Recuerda lang="ja" en el HTML del contenido japonés.
+     ------------------------------------------------------------------ */
+  --font-jp: "Noto Sans JP", "Noto Sans CJK JP",
+             "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+             "Yu Gothic", "Meiryo", sans-serif;
+  --font-ui: "Space Grotesk", system-ui, -apple-system,
+             "Segoe UI", sans-serif;
+
+  /* Escala de tamaños */
+  --text-xs:   0.75rem;   /* metadatos, timestamps */
+  --text-sm:   0.875rem;  /* etiquetas, texto secundario */
+  --text-base: 1rem;      /* cuerpo */
+  --text-lg:   1.25rem;   /* títulos de sección */
+  --text-xl:   1.75rem;   /* título de vista */
+  /* Contenido de tarjeta: un kanji solo debe verse ENORME,
+     una frase debe seguir cabiendo. clamp lo resuelve. */
+  --text-card: clamp(2rem, 8vw, 4.5rem);
+
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-bold:    700;
+
+  --leading-tight:  1.2;
+  --leading-base:   1.55;
+
+  /* ------------------------------------------------------------------
+     ESPACIADO — base 4px
+     ------------------------------------------------------------------ */
+  --space-1: 0.25rem;  /*  4px */
+  --space-2: 0.5rem;   /*  8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.5rem;   /* 24px */
+  --space-6: 2rem;     /* 32px */
+  --space-7: 3rem;     /* 48px */
+  --space-8: 4rem;     /* 64px */
+
+  /* Radios — contenidos, en línea con la vena brutalista */
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  /* ------------------------------------------------------------------
+     MOTION
+     ------------------------------------------------------------------ */
+  --duration-fast: 150ms;  /* hovers, toggles */
+  --duration-base: 250ms;  /* transiciones de vista, modales */
+  --flip-duration: 480ms;  /* EL volteo */
+
+  --ease-out:  cubic-bezier(0.22, 1, 0.36, 1);
+  /* Overshoot leve: la tarjeta "pasa" un pelo de 180° y asienta.
+     Le da peso físico al volteo sin ser caricaturesco. */
+  --ease-flip: cubic-bezier(0.45, 0.05, 0.25, 1.1);
+
+  /* Sombras — solo para overlays; la elevación normal es por color */
+  --shadow-overlay: 0 16px 48px rgba(0, 0, 0, 0.5);
+
+  /* Z-index */
+  --z-base:    0;
+  --z-sticky:  10;
+  --z-overlay: 100;
+  --z-modal:   200;
+  --z-toast:   300;
+}

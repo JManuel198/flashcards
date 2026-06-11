@@ -1,0 +1,69 @@
+/* ==========================================================================
+   layout.css — Estructura de la app: contenedor, navegación y área de vistas.
+   Mobile-first: primero móvil, luego un breakpoint hacia arriba.
+   Una app de estudio no quiere ser ancha: el foco está en una tarjeta.
+   ========================================================================== */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
+
+  /* Contenedor centrado y contenido — no demasiado ancho */
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+/* --- Cabecera / navegación ---------------------------------------------- */
+.app__header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  background-color: var(--surface);
+  padding-block: var(--space-4);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--space-7);
+}
+
+/* --- Área de contenido / vistas ----------------------------------------- */
+.app__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-block: var(--space-4) var(--space-7);
+}
+
+.view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  flex: 1;
+}
+
+/* Una sola vista activa a la vez: el router quitará [hidden] de la actual */
+.view[hidden] {
+  display: none;
+}
+
+/* --- Breakpoint: pantallas más anchas ----------------------------------- */
+@media (min-width: 48rem) {
+  .app {
+    padding-inline: var(--space-6);
+  }
+
+  .app__header {
+    padding-block: var(--space-5);
+  }
+
+  .app__content {
+    padding-block: var(--space-5) var(--space-8);
+  }
+}
